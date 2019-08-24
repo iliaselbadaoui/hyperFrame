@@ -1,0 +1,12 @@
+{
+    "AppInfo" : 
+    {
+        "AppName" : "Test",
+        "AppIcon" : "ico.png",
+        "Version" : "1.0.0"
+    },
+    "Packages" :
+    [
+        {"Name":"vue","Path":"vendor/vue.js","Type":"script"}
+    ]
+}
