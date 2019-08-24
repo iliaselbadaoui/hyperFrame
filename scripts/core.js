@@ -91,11 +91,17 @@ const hyperFrame =
 {
     checkDateFormat(date)
     {
-        if (date.includes('/'))
+
+        let slashFormat = new RegExp('^[0-9]{2}/[0-9]{2}/[0-9]*$'),
+            hyphenFormat = new RegExp('^[0-9]{2}/[0-9]{2}/[0-9]*$');
+        if (slashFormat.test(date) || hyphenFormat.test(date))
         {
             
         }
         else
+        {
+            console.error('Date format should be like "DD/MM/YYYY" or "DD-MM-YYYY"');
+        }
     },
     countDown(GoalDate)
     {
