@@ -179,7 +179,7 @@ const hyperFrame = {
             return Math.abs(date1.getTime() - date2.getTime()) / 1000;
         }
     },
-    timeSpanEntity(date1, date2) {
+    DateDifEntity(date1, date2) {
         let span = this.timeSpan(date1, date2),
             entity = {
                 days: 0,
@@ -195,5 +195,19 @@ const hyperFrame = {
         span -= entity.minutes * 60;
         entity.seconds = Math.floor(span);
         return entity;
+    },
+    getYoutubeVideo(video, link){
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET',link,true);
+        xhr.setRequestHeader('Access-Control-Allow-Headers' ,'*');
+        xhr.setRequestHeader('Access-Control-Allow-Origin' ,'*');
+        xhr.setRequestHeader('Access-Control-Allow-Methods','GET');
+        console.log(xhr.getAllResponseHeaders())
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200){
+                console.info(xhr.responseText);
+            }
+        };
+        xhr.send();
     }
 };
