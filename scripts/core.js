@@ -174,13 +174,13 @@ const hyperFrame = {
         }
         return true;
     },
-    timeSpan(date1, date2) {
-        if (date1.getTime() !== undefined && date2.getTime() !== undefined) {
-            return Math.abs(date1.getTime() - date2.getTime()) / 1000;
+    timeSpan(start, end) {
+        if (start.getTime() !== undefined && end.getTime() !== undefined) {
+            return Math.abs(start.getTime() - end.getTime()) / 1000;
         }
     },
-    DateDifEntity(date1, date2) {
-        let span = this.timeSpan(date1, date2),
+    DateDiffEntity(start, end) {
+        let span = this.timeSpan(start, end),
             entity = {
                 days: 0,
                 hours: 0,
@@ -196,18 +196,53 @@ const hyperFrame = {
         entity.seconds = Math.floor(span);
         return entity;
     },
-    getYoutubeVideo(video, link){
-        let xhr = new XMLHttpRequest();
-        xhr.open('GET',link,true);
-        xhr.setRequestHeader('Access-Control-Allow-Headers' ,'*');
-        xhr.setRequestHeader('Access-Control-Allow-Origin' ,'*');
-        xhr.setRequestHeader('Access-Control-Allow-Methods','GET');
-        console.log(xhr.getAllResponseHeaders())
-        xhr.onreadystatechange = function(){
-            if(xhr.readyState == 4 && xhr.status == 200){
-                console.info(xhr.responseText);
+    setUpCountDown(parentId, start) {
+        let container = document.createElement('div'),
+            days = document.createElement('span'),
+            hours = document.createElement('span'),
+            minutes = document.createElement('span'),
+            seconds = document.createElement('span'),
+            parent = document.getElementById(parentId),
+            countEntity;
+        container.appendChild(days);
+        container.appendChild(hours);
+        container.appendChild(minutes);
+        container.appendChild(seconds);
+        parent.appendChild(container);
+        container.id = 'CountDown';
+        days.id = 'CD_days';
+        hours.id = 'CD_hours';
+        minutes.id = 'CD_minutes';
+        seconds.id = 'CD_seconds';
+        setInterval(function () {
+            countEntity = hyperFrame.DateDiffEntity(start, new Date())
+            if (countEntity.days < 10) {
+                days.textContent = '0' + countEntity.days;
+            } else {
+                days.textContent = countEntity.days;
             }
-        };
-        xhr.send();
+            if (countEntity.hours < 10) {
+                hours.textContent = '0' + countEntity.hours;
+            } else {
+                hours.textContent = countEntity.hours;
+            }
+            if (countEntity.minutes < 10) {
+                minutes.textContent = '0' + countEntity.minutes;
+            } else {
+                minutes.textContent = countEntity.minutes;
+            }
+            if (countEntity.seconds < 10) {
+                seconds.textContent = '0' + countEntity.seconds;
+            } else {
+                seconds.textContent = countEntity.seconds;
+            }
+        }, 1000);
+    },
+    onReady(callback) {
+        document.onreadystatechange = function () {
+            if (document.readyState == 'complete') {
+                callback();
+            }
+        }
     }
 };
