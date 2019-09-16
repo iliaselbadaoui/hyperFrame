@@ -202,39 +202,73 @@ const hyperFrame = {
             hours = document.createElement('span'),
             minutes = document.createElement('span'),
             seconds = document.createElement('span'),
+            DV = document.createElement('span'),
+            HV = document.createElement('span'),
+            MV = document.createElement('span'),
+            SV = document.createElement('span'),
+            days_sticker  = document.createElement('span'),
+            hours_sticker  = document.createElement('span'),
+            minutes_sticker  = document.createElement('span'),
+            seconds_sticker  = document.createElement('span'),
             parent = document.getElementById(parentId),
-            countEntity;
+            countEntity,
+            CountDown;
+        for (let i = 0; i < parent.childNodes.length; i++) {
+            if(parent.childNodes[i].tagName === 'COUNTDOWN')
+            {
+                CountDown = parent.childNodes[i];
+                break;
+            }
+        }
         container.appendChild(days);
+        days.appendChild(DV);
+        days.appendChild(days_sticker);
+        hours.appendChild(HV);
+        hours.appendChild(hours_sticker);
+        minutes.appendChild(MV);
+        minutes.appendChild(minutes_sticker);
+        seconds.appendChild(SV);
+        seconds.appendChild(seconds_sticker);
         container.appendChild(hours);
         container.appendChild(minutes);
         container.appendChild(seconds);
-        parent.appendChild(container);
+        if (CountDown !== undefined) {
+            parent.replaceChild(container,CountDown);
+        }
+        days_sticker.textContent = "Days";
+        hours_sticker.textContent = "Hours";
+        minutes_sticker.textContent = "Minutes";
+        seconds_sticker.textContent = "Seconds";
         container.id = 'CountDown';
-        days.id = 'CD_days';
-        hours.id = 'CD_hours';
-        minutes.id = 'CD_minutes';
-        seconds.id = 'CD_seconds';
+        days.className = "CD_Sticker";
+        hours.className = "CD_Sticker";
+        minutes.className = "CD_Sticker";
+        seconds.className = "CD_Sticker"; 
+        DV.id = 'CD_days';
+        HV.id = 'CD_hours';
+        MV.id = 'CD_minutes';
+        SV.id = 'CD_seconds';
         setInterval(function () {
             countEntity = hyperFrame.DateDiffEntity(start, new Date())
             if (countEntity.days < 10) {
-                days.textContent = '0' + countEntity.days;
+                DV.textContent = '0' + countEntity.days;
             } else {
-                days.textContent = countEntity.days;
+                DV.textContent = countEntity.days;
             }
             if (countEntity.hours < 10) {
-                hours.textContent = '0' + countEntity.hours;
+                HV.textContent = '0' + countEntity.hours;
             } else {
-                hours.textContent = countEntity.hours;
+                HV.textContent = countEntity.hours;
             }
             if (countEntity.minutes < 10) {
-                minutes.textContent = '0' + countEntity.minutes;
+                MV.textContent = '0' + countEntity.minutes;
             } else {
-                minutes.textContent = countEntity.minutes;
+                MV.textContent = countEntity.minutes;
             }
             if (countEntity.seconds < 10) {
-                seconds.textContent = '0' + countEntity.seconds;
+                SV.textContent = '0' + countEntity.seconds;
             } else {
-                seconds.textContent = countEntity.seconds;
+                SV.textContent = countEntity.seconds;
             }
         }, 1000);
     },
@@ -244,5 +278,10 @@ const hyperFrame = {
                 callback();
             }
         }
+    },
+    changeClassName(id,oldClass,newClass){
+        var element = document.getElementById(id),
+            classname = element.className.split(' ');
+            
     }
 };
