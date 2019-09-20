@@ -1,7 +1,10 @@
 'use strict';
-var dateErr = new Error();
+var dateErr = new Error(),
+    classErr = new Error();
 dateErr.name = 'Date error';
 dateErr.message = 'Check the date.';
+classErr.name = 'class Error';
+classErr.message = 'class invalid or not exist'
 
 function CompileConfig(config) {
     if (config.hasOwnProperty('AppInfo') && config.hasOwnProperty('Packages')) {
@@ -279,9 +282,25 @@ const hyperFrame = {
             }
         }
     },
+    on(id,event,callback){
+        document.getElementById(id).addEventListener(event,function(){window.event.stopPropagation(); callback();});
+    },
     changeClassName(id,oldClass,newClass){
-        var element = document.getElementById(id),
-            classname = element.className.split(' ');
-            
+        let element = document.getElementById(id),
+            classname = element.className;
+        if (classname.includes(oldClass)) {
+            classname = classname.split(' ');
+            for (let i = 0; i < classname.length; i++) {
+                if(classname[i] === oldClass){
+                    classname[i] = newClass;
+                    break;
+                }
+            }
+            classname = classname.join(' ');
+            element.className = classname;
+        }
+        else{
+            console.error(classErr.message);
+        }
     }
 };

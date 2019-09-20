@@ -2,7 +2,7 @@
     "AppInfo" : 
     {
         "AppName" : "Moon Count",
-        "AppIcon" : "ico.png",
+        "AppIcon" : "favicon.png",
         "Version" : "1.0.0"
     },
     "Packages" :
