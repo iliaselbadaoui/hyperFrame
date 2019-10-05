@@ -7,7 +7,6 @@
     },
     "Packages" :
     [
-        {"Name":"vue","Path":"vendor/vue.js","Type":"script"},
         {"Name":"artist","Path":"styles/artist.css","Type":"style"},
         {"Name":"actions","Path":"scripts/actions.js","Type":"script"}
     ]
