@@ -1,2 +1,2 @@
 # hyperFrame
-A Javascript model to create and build One Page Web Applications
+_A Javascript model to create and build One Page Web Applications_

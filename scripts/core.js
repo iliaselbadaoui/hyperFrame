@@ -1,11 +1,14 @@
 'use strict';
-var dateErr = new Error(),
-    classErr = new Error();
-dateErr.name = 'Date error';
-dateErr.message = 'Check the date.';
-classErr.name = 'class Error';
-classErr.message = 'class invalid or not exist'
-
+function include(package_path){
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET",package_path,true);
+    xhr.onreadystatechange = function(){
+        if (xhr.status==200&&xhr.readyState==4) {
+            
+        }
+    };
+    xhr.send();
+}
 function CompileConfig(config) {
     if (config.hasOwnProperty('AppInfo') && config.hasOwnProperty('Packages')) {
         if (!config.AppInfo.hasOwnProperty('AppName') || !config.AppInfo.hasOwnProperty('AppIcon') || !config.AppInfo.hasOwnProperty('Version')) {
@@ -61,6 +64,7 @@ function ReadConfig() {
                         pack.href = config.Packages[i].Path;
                         pack.rel = 'stylesheet';
                         pack.id = config.Packages[i].Name;
+                        pack.media = 'screen';
                         document.head.appendChild(pack);
                     } else {
                         console.error("Type should be 'script' or 'style' and nothing else.");
