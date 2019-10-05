@@ -1,14 +1,29 @@
 'use strict';
-function include(package_path){
+function HtmlComponent(name){
+    let component = document.createElement(name);
+    component.appendTo = function(parentId){
+        if (document.getElementById(parentId)!= undefined) {
+            document.getElementById(parentId).appendChild(component);
+        } else {
+            document.getElementsByTagName(parentId)[0].appendChild(component);
+        }
+    };
+    return component;
+}
+function include(JS_package_path){
     let xhr = new XMLHttpRequest();
-    xhr.open("GET",package_path,true);
+    xhr.open("GET",JS_package_path,true);
     xhr.onreadystatechange = function(){
         if (xhr.status==200&&xhr.readyState==4) {
-            
+            let script = new HtmlComponent('script');
+            script.appendTo('head');
+            script.type='text/javascript';
+            script.textContent = xhr.responseText;
         }
     };
     xhr.send();
 }
+include('scripts/errors.js');
 function CompileConfig(config) {
     if (config.hasOwnProperty('AppInfo') && config.hasOwnProperty('Packages')) {
         if (!config.AppInfo.hasOwnProperty('AppName') || !config.AppInfo.hasOwnProperty('AppIcon') || !config.AppInfo.hasOwnProperty('Version')) {
