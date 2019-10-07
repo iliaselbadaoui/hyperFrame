@@ -1,8 +1,9 @@
 'use strict';
-function HtmlComponent(name){
+
+function HtmlComponent(name) {
     let component = document.createElement(name);
-    component.appendTo = function(parentId){
-        if (document.getElementById(parentId)!= undefined) {
+    component.appendTo = function (parentId) {
+        if (document.getElementById(parentId) != undefined) {
             document.getElementById(parentId).appendChild(component);
         } else {
             document.getElementsByTagName(parentId)[0].appendChild(component);
@@ -10,20 +11,22 @@ function HtmlComponent(name){
     };
     return component;
 }
-function include(JS_package_path){
+
+function include(JS_package_path) {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET",JS_package_path,true);
-    xhr.onreadystatechange = function(){
-        if (xhr.status==200&&xhr.readyState==4) {
+    xhr.open("GET", JS_package_path, true);
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200 && xhr.readyState == 4) {
             let script = new HtmlComponent('script');
             script.appendTo('head');
-            script.type='text/javascript';
+            script.type = 'text/javascript';
             script.textContent = xhr.responseText;
         }
     };
     xhr.send();
 }
 include('scripts/errors.js');
+
 function CompileConfig(config) {
     if (config.hasOwnProperty('AppInfo') && config.hasOwnProperty('Packages')) {
         if (!config.AppInfo.hasOwnProperty('AppName') || !config.AppInfo.hasOwnProperty('AppIcon') || !config.AppInfo.hasOwnProperty('Version')) {
@@ -228,16 +231,15 @@ const hyperFrame = {
             HV = document.createElement('span'),
             MV = document.createElement('span'),
             SV = document.createElement('span'),
-            days_sticker  = document.createElement('span'),
-            hours_sticker  = document.createElement('span'),
-            minutes_sticker  = document.createElement('span'),
-            seconds_sticker  = document.createElement('span'),
+            days_sticker = document.createElement('span'),
+            hours_sticker = document.createElement('span'),
+            minutes_sticker = document.createElement('span'),
+            seconds_sticker = document.createElement('span'),
             parent = document.getElementById(parentId),
             countEntity,
             CountDown;
         for (let i = 0; i < parent.childNodes.length; i++) {
-            if(parent.childNodes[i].tagName === 'COUNTDOWN')
-            {
+            if (parent.childNodes[i].tagName === 'COUNTDOWN') {
                 CountDown = parent.childNodes[i];
                 break;
             }
@@ -255,7 +257,7 @@ const hyperFrame = {
         container.appendChild(minutes);
         container.appendChild(seconds);
         if (CountDown !== undefined) {
-            parent.replaceChild(container,CountDown);
+            parent.replaceChild(container, CountDown);
         }
         days_sticker.textContent = "Days";
         hours_sticker.textContent = "Hours";
@@ -265,7 +267,7 @@ const hyperFrame = {
         days.className = "CD_Sticker";
         hours.className = "CD_Sticker";
         minutes.className = "CD_Sticker";
-        seconds.className = "CD_Sticker"; 
+        seconds.className = "CD_Sticker";
         DV.id = 'CD_days';
         HV.id = 'CD_hours';
         MV.id = 'CD_minutes';
@@ -301,25 +303,43 @@ const hyperFrame = {
             }
         }
     },
-    on(id,event,callback){
-        document.getElementById(id).addEventListener(event,function(){window.event.stopPropagation(); callback();});
+    on(id, event, callback) {
+        document.getElementById(id).addEventListener(event, function () {
+            window.event.stopPropagation();
+            callback();
+        });
     },
-    changeClassName(id,oldClass,newClass){
+    changeClassName(id, oldClass, newClass) {
         let element = document.getElementById(id),
             classname = element.className;
         if (classname.includes(oldClass)) {
             classname = classname.split(' ');
             for (let i = 0; i < classname.length; i++) {
-                if(classname[i] === oldClass){
+                if (classname[i] === oldClass) {
                     classname[i] = newClass;
                     break;
                 }
             }
             classname = classname.join(' ');
             element.className = classname;
-        }
-        else{
+        } else {
             console.error(classErr.message);
         }
+    },
+    findComponent(parent,name){
+
+    },
+    parseDocument(name){
+        let tree = document.children;
+        for (let i = 0; i < tree.length; i++) {
+            if (tree[i].tagName.toUpperCase() == name.toUpperCase()) {
+                return tree[i];
+            }else if (tree[i].tagName.toUpperCase() != name.toUpperCase()) {
+                
+            }
+        }
+    },
+    component(name,component){
+        
     }
 };

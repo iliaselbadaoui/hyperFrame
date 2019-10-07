@@ -1,6 +1,9 @@
 var dateErr = new Error(),
+    componentObjectErr = new Error(),
     classErr = new Error();
 dateErr.name = 'Date error';
 dateErr.message = 'Check the date.';
-classErr.name = 'class Error';
-classErr.message = 'class invalid or not exist';
+classErr.name = 'Class error';
+classErr.message = 'Class invalid or not exist';
+componentObjectErr.name = 'Component error';
+componentObjectErr.message = 'Component structer is not valide';
